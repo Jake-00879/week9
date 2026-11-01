@@ -7,7 +7,16 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
-        
+
+        <style>
+            /* 클래스 직접 정의 */
+            .justify-content-center {
+                display: flex;
+                justify-content: center; /* 가로 중앙 */
+                align-items: center;     /* 세로 중앙 */
+            }
+        </style>
+
         <script>
             window.addEventListener("load", function(){
             const startbtn = document.querySelector("#start");
@@ -50,7 +59,7 @@
 
 
     <body>
-        <div id="box" style="width: 300px; height: 200px; border: 1px solid black;">
+        <div id="box" class="justify-content-center" style="width: 300px; height: 200px; border: 1px solid black;">
 
         </div>
         <button id="start">시작</button>

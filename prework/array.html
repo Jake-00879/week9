@@ -1,47 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        const scores = [100, 90, 80];
 
-        scores.forEach(score => {
-            console.log(score);
+        window.addEventListener("load", function () {
+            const scores = [100, 90, 80];
+            const list1 = document.querySelector("#narray");
+            
+
+            scores.forEach(score => {
+                console.log(score);
+            });
+
+            const updated = scores.map(score => score + 5);
+            console.log(updated);
+
+            updated.forEach(score => {
+                const cd = document.createElement("li");
+                cd.textContent = score;
+                list1.appendChild(cd);
+            });
+
+
+            const students = [
+                { id: 1, name: "kim", score: 85 },
+                { id: 2, name: "Lee", score: 92 },
+                { id: 3, name: "Park", score: 78 },
+                { id: 4, name: "Kang", score: 34 }
+            ];
+
+            const names = students.map(function (student) {
+                return student.name;
+            });
+            console.log(names);
+
+            const result = students.filter(function (student) {
+                return student.id !== 2;
+            });
+
+            const list2 = document.querySelector("#farray");
+            result.forEach(student => {
+                const cl = document.createElement("li");
+                cl.textContent = `${student.id} ${student.name}`;
+                list2.appendChild(cl);
+            });
         });
 
-        const updated = scores.map(score => score + 5);
-        console.log(updated);
-
-        const students = [
-            {id: 1, name: "kim", score: 85},
-            {id: 2, name: "Lee", score: 92},
-            {id: 3, name: "Park", score: 78},
-            {id: 4, name: "Kang", score: 34}
-        ];
-
-        const names = students.map(function(student){
-            return student.name;
-        });
-        console.log(names);
-        const list1 = document.querySelector("#narray");
-        list1.childElement
-
-        //print the array on the screen
-
-        const result = students.filter(function(student){
-            return student.id !== 2;
-        });
 
 
-        
 
 
     </script>
 </head>
+
 <body>
     <ul id="narray">이름 배열</ul>
     <ul id="farray">필터링 한 배열 출력</ul>
 </body>
+
 </html>
