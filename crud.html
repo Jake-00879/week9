@@ -95,6 +95,33 @@
             }
         }
 
+        async function updatesong(id, bname, author, sort, when, who) {
+            const updated = {
+                songname: bname,
+                singername: author,
+                kindof: sort,
+                when: when,
+                who: who
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(updated)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+
+                }
+                    await GETSongs();
+            } catch (error){
+                    console.error("수정 실패:", error);
+            }
+        }
+                
+
         async function addsong(songname, singername, kindof, when, who) {
             const newSong = {
                 songname: songname,
@@ -112,7 +139,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+                    throw new Error(`HTTP ${ response.status }`);
                 }
 
                 await GETSongs();   // 저장 성공 후 최신 목록 다시 불러오기
@@ -143,7 +170,7 @@
                     editingId = null;
                     btn.textContent = "등록";
                 } else {
-                    await addsong(bname.value, author.value, when.value, who.value, sort.value);
+                    await addsong(bname.value, author.value, sort.value, when.value, who.value);
                 }
                 form.reset();
                 bname.focus();
@@ -211,7 +238,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary" id="btn">도서 등록</button>
+                    <button type="submit" class="btn btn-primary" id="btn">음반 등록</button>
 
                 </form>
             </div>
