@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="my.css">
     <script>
         let API_URL = "https://6adea6d64e88f1bba4a539f6.mockapi.io/users"
+        let editingId = null;
+        let songs = null;
 
         async function GETSongs() {
             try {
@@ -18,7 +20,7 @@
                     throw new Error(`HTTP ${response.status}`);
                 }
 
-                const songs = await response.json();
+                songs = await response.json();
                 console.log("받아온 곡 데이터:", songs);
 
                 renderSong(songs);
@@ -33,13 +35,103 @@
 
             songs.forEach(song => {
                 const li = document.createElement("li");
-                li.className = "list-group-item";
+                li.className = "list-group-item mb-3";
 
-                li.textContent = `${song.id} - ${song.songname} - ${song.singername} - ${song.kindof}`;
+                li.textContent = `${song.id} / ${song.songname} / ${song.singername} / ${song.kindof}`;
+                
+                const buttonm = document.createElement("button");
+                buttonm.textContent = "수정";
+                buttonm.className = "btn btn-sm btn-outline-primary me-1";
+                buttonm.addEventListener("click", function () {
+                    modifyItem(song.id);
+                });
+
+                const buttonx = document.createElement("button");
+                buttonx.textContent = "삭제";
+                buttonx.className = "btn btn-sm btn-outline-danger";
+                buttonx.addEventListener("click", function () {
+                    removeItem(song.id);
+                });
+
+                li.appendChild(buttonm);
+                li.appendChild(buttonx);
                 list.appendChild(li);
             });
         };
 
+        function modifyItem(){};
+        function removeItem(){};
+        async function addsong(songname, singername, kindof, when, who) {
+    const newSong = {
+        songname: songname,
+        singername: singername,
+        kindof: kindof,
+        when: when,
+        who: who
+    };
+
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newSong)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        await GETSongs();   // 저장 성공 후 최신 목록 다시 불러오기
+    } catch (error) {
+        console.error("등록 실패:", error);
+    }
+}
+
+        window.addEventListener("DOMContentLoaded", function () {
+            GETSongs();
+            const form = document.querySelector('#list');
+            const bname = document.querySelector("#bname");
+            const author = document.querySelector("#author");
+            const when = document.querySelector("#when");
+            const who = document.querySelector("#who");
+            const sort = document.querySelector("#sort");
+            const btn = document.querySelector("#btn");
+
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (!form.checkValidity()) {
+                    form.reportValidity(); 
+                    return; 
+                }
+
+                if (editingId !== null) {
+                    const target = songs.find(song => song.id == editingId);
+                    if (target) {
+                        target.bname = document.querySelector("#bname").value;
+                        target.author = document.querySelector("#author").value;
+                        target.when = document.querySelector("#when").value;
+                        target.who = document.querySelector("#who").value;
+                        target.sort = document.querySelector("#sort").value;
+
+                    }
+                    editingId = null;
+                    btn.textContent = "등록";
+
+
+                } else {
+                    addsong(bname.value, author.value, when.value, who.value, sort.value);
+                }
+                bname.value = "";
+                author.value = "";
+                when.value = "";
+                who.value = "";
+                sort.value = "";
+                bname.focus();
+                GETSongs();
+
+            });
+
+        });
         
     </script>
 </head>
