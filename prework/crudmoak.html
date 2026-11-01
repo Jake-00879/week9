@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let API_URL = "https://6adea6d64e88f1bba4a539f6.mockapi.io/:endpoint"
+        async function loadStudent(){
+            const response = await fetch(API_URL);
+
+            if(!response.ok){
+                throw new Error(`HTTP ${response.status}`);
+            }
+        }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
