@@ -89,7 +89,7 @@
                     throw new Error(`HTTP ${response.status}`);
                 }
 
-                await GETSongs();   // 삭제 성공 후 최신 목록 다시 불러오기
+                await GETSongs();  
             } catch (error) {
                 console.error("삭제 실패:", error);
             }
@@ -142,7 +142,7 @@
                     throw new Error(`HTTP ${response.status}`);
                 }
 
-                await GETSongs();   // 저장 성공 후 최신 목록 다시 불러오기
+                await GETSongs(); 
             } catch (error) {
                 console.error("등록 실패:", error);
             }
@@ -210,19 +210,19 @@
                     <h2 class="card-title h4 fw-bold text-primary mb-3">도서 추가하기</h2>
                     <div class="mb-3">
                         <label for="bname">음반 이름</label>
-                        <input type="text" class="form-control" id="bname" name="bname" placeholder="도서 이름을 입력해주세요"
+                        <input type="text" class="form-control" id="bname" name="bname" placeholder="음반 이름을 입력해주세요"
                             required minlength="1">
                     </div>
 
                     <div class="mb-3">
                         <label for="author">작곡가</label>
-                        <input type="text" class="form-control" id="author" name="author" placeholder="저자 이름을 입력해주세요"
+                        <input type="text" class="form-control" id="author" name="author" placeholder="가수 이름을 입력해주세요"
                             required minlength="2">
                     </div>
 
                     <div class="mb-3">
                         <label for="btype">분야</label>
-                        <input list="btype" class="form-control" name="sort" id="sort" placeholder="ex. 철학, 문학, 예술..."
+                        <input list="btype" class="form-control" name="sort" id="sort" placeholder="ex. 발라드, 락, 인디..."
                             required minlength="2">
                         <datalist id="btype">
                             <option value="발라드"></option>
@@ -239,7 +239,7 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="mb-3 col-4">
-                            <label for="when">음반 매입</label>
+                            <label for="when">음반 매입날짜</label>
                             <input type="date" class="form-control" id="when" name="when" required>
                         </div>
 
