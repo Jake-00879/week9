@@ -12,30 +12,49 @@
             window.addEventListener("load", function(){
             const startbtn = document.querySelector("#start");
             const stopbtn = document.querySelector("#stop");
-            let count = 0;
-            
+            let count1 = 0;
+            let count2 = 0;
+
+            const timerId = setInterval(() => {
+                count1++;
+                console.log(count1);
+                
+                if(count1 == 5){
+                    clearInterval(timerId);
+                }
+            }, 1000); //자동으로 콘솔에 1~5까지 찍히게 하는 거
+
+            const cbox = document.querySelector("#box");
+            const cd = document.createElement("h2");
+            cbox.appendChild(cd);
+            let timerId2 = null;
+
             startbtn.addEventListener("click", function(){
+                if(timerId2 !== null) return;
 
-                const timerId = setInterval(() => {
-
-                    const timerId = 
-                    
-
+                timerId2 = setInterval(() => {
+                    cd.textContent = count2;
+                    count2++;
                 }, 1000);
-
             });
-            })
+
+            stopbtn.addEventListener("click", function(){
+                clearInterval(timerId2);
+                timerId2 = null;
+            });
+        });
+
         </script>    
     </head>
 
 
 
     <body>
-        <div class="card">
+        <div id="box" style="width: 300px; height: 200px; border: 1px solid black;">
+
         </div>
-        <button class="start">시작</button>
-        <button class="stop">종료</button>
-        </div>
+        <button id="start">시작</button>
+        <button id="stop">종료</button> 
     </body>
 
 </html>
