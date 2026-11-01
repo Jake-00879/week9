@@ -59,8 +59,21 @@
             });
         };
 
-        function modifyItem() { };
-        
+        function modifyItem(id) {
+            const target = songs.find(song => song.id == id);
+            if (!target) return;
+
+            document.querySelector('#bname').value = target.songname;
+            document.querySelector('#author').value = target.singername;
+            document.querySelector('#sort').value = target.kindof;
+            document.querySelector('#when').value = target.when;
+            document.querySelector('#who').value = target.who;
+
+            document.querySelector("#btn").textContent = "수정 완료";
+            editingId = id;
+            document.querySelector('#bname').focus();
+        }
+
         async function removeItem(id) {
             const sure = confirm("삭제하시겠습니까?");
             if (!sure) {
@@ -126,18 +139,6 @@
                 }
 
                 if (editingId !== null) {
-                    const target = songs.find(song => song.id == editingId);
-                    if (target) {
-                        target.bname = document.querySelector("#bname").value;
-                        target.author = document.querySelector("#author").value;
-                        target.when = document.querySelector("#when").value;
-                        target.who = document.querySelector("#who").value;
-                        target.sort = document.querySelector("#sort").value;
-
-                    }
-                    editingId = null;
-                    btn.textContent = "등록";
-
 
                 } else {
                     addsong(bname.value, author.value, when.value, who.value, sort.value);
