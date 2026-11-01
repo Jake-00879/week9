@@ -9,42 +9,73 @@
     <link rel="stylesheet" href="my.css">
 </head>
 
-<body>
-    <nav>
-        <div>
-            <a>도서관리</a>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expend lg navbar-dark bg-primary">
+        <div class="container justify-content-center">
+            <a class="navbar-brand fw-bold">도서관리</a>
         </div>
     </nav>
-    <form>
-        <h2>도서 추가하기</h2>
-        <label for="bname">도서 이름</label>
 
-        <input type="text">
-        <label for="author">저자 이름</label>
+    <div class="container" style="max-width: 800;">
+        <div class="card shdow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <form id="list">
+                    <h2 class="card-title h4 fw-bold text-primary mb-3">도서 추가하기</h2>
+                    <div class="mb-3">
+                        <label for="bname">도서 이름</label>
+                        <input type="text" class="form-control" id="bname" name="bname" placeholder="도서 이름을 입력해주세요"
+                            required minlength="1">
+                    </div>
 
-        <input type="text">
-        <label for="sort">도서 분야</label>
+                    <div class="mb-3">
+                        <label for="author">저자 이름</label>
+                        <input type="text" class="form-control" id="author" name="author" placeholder="저자 이름을 입력해주세요"
+                            required minlength="2">
+                    </div>
 
-        <input list="btype">
-        <datalist id="btype">
-            <option value="총류"></option>
-            <option value="철학"></option>
-            <option value="종교"></option>
-            <option value="사회과학"></option>
-            <option value="자연과학"></option>
-            <option value="기술과학"></option>
-            <option value="예술"></option>
-            <option value="언어"></option>
-            <option value="문학"></option>
-            <option value="역사"></option>
-        </datalist>
+                    <div class="mb-3">
+                        <label for="btype">도서 분야</label>
+                        <input list="btype" class="form-control" name="sort" id="sort" placeholder="ex. 철학, 문학, 예술..."
+                            required minlength="2">
+                        <datalist id="btype">
+                            <option value="총류"></option>
+                            <option value="철학"></option>
+                            <option value="종교"></option>
+                            <option value="사회과학"></option>
+                            <option value="자연과학"></option>
+                            <option value="기술과학"></option>
+                            <option value="예술"></option>
+                            <option value="언어"></option>
+                            <option value="문학"></option>
+                            <option value="역사"></option>
+                        </datalist>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="mb-3 col-4">
+                            <label for="when">반입일자</label>
+                            <input type="date" class="form-control" id="when" name="when" required>
+                        </div>
 
-        <label for="when">반입일자</label>
-        <input type="date">
+                        <div class="mb-3 col-8">
+                            <label for="who">반입자 이메일</label>
+                            <input type="email" class="form-control" id="who" name="who"
+                                placeholder="이메일주소를 입력해주세요" required>
+                        </div>
+                    </div>
 
-        <button type="submit">도서 등록</button>
+                    <button type="submit" class="btn btn-primary" id="btn">도서 등록</button>
 
-    </form>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container card shadow-sm border-0 mb-4" style="max-width: 800;">
+        <div class="card-body p-4">
+            <h2>등록된 도서 목록</h2>
+            <ul id="cblist"></ul>
+        </div>
+    </div>
 </body>
 
 </html>
