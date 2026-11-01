@@ -38,7 +38,7 @@
                 li.className = "list-group-item mb-3";
 
                 li.textContent = `${song.id} / ${song.songname} / ${song.singername} / ${song.kindof}`;
-                
+
                 const buttonm = document.createElement("button");
                 buttonm.textContent = "수정";
                 buttonm.className = "btn btn-sm btn-outline-primary me-1";
@@ -59,33 +59,54 @@
             });
         };
 
-        function modifyItem(){};
-        function removeItem(){};
-        async function addsong(songname, singername, kindof, when, who) {
-    const newSong = {
-        songname: songname,
-        singername: singername,
-        kindof: kindof,
-        when: when,
-        who: who
-    };
+        function modifyItem() { };
+        
+        async function removeItem(id) {
+            const sure = confirm("삭제하시겠습니까?");
+            if (!sure) {
+                return;
+            }
 
-    try {
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newSong)
-        });
+            try {
+                const response = await fetch(`${API_URL}/${id}`, {
+                    method: "DELETE"
+                });
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                await GETSongs();   // 삭제 성공 후 최신 목록 다시 불러오기
+            } catch (error) {
+                console.error("삭제 실패:", error);
+            }
         }
 
-        await GETSongs();   // 저장 성공 후 최신 목록 다시 불러오기
-    } catch (error) {
-        console.error("등록 실패:", error);
-    }
-}
+        async function addsong(songname, singername, kindof, when, who) {
+            const newSong = {
+                songname: songname,
+                singername: singername,
+                kindof: kindof,
+                when: when,
+                who: who
+            };
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(newSong)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                await GETSongs();   // 저장 성공 후 최신 목록 다시 불러오기
+            } catch (error) {
+                console.error("등록 실패:", error);
+            }
+        }
 
         window.addEventListener("DOMContentLoaded", function () {
             GETSongs();
@@ -100,8 +121,8 @@
             btn.addEventListener("click", function (e) {
                 e.preventDefault();
                 if (!form.checkValidity()) {
-                    form.reportValidity(); 
-                    return; 
+                    form.reportValidity();
+                    return;
                 }
 
                 if (editingId !== null) {
@@ -132,7 +153,7 @@
             });
 
         });
-        
+
     </script>
 </head>
 
@@ -186,8 +207,8 @@
 
                         <div class="mb-3 col-8">
                             <label for="who">매입자 이메일</label>
-                            <input type="email" class="form-control" id="who" name="who"
-                                placeholder="이메일주소를 입력해주세요" required>
+                            <input type="email" class="form-control" id="who" name="who" placeholder="이메일주소를 입력해주세요"
+                                required>
                         </div>
                     </div>
 
