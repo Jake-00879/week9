@@ -1,21 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script>
-        let API_URL = "https://6adea6d64e88f1bba4a539f6.mockapi.io/:endpoint"
-        async function loadStudent(){
-            const response = await fetch(API_URL);
+        let API_URL = "https://6adea6d64e88f1bba4a539f6.mockapi.io/stuname"
 
-            if(!response.ok){
-                throw new Error(`HTTP ${response.status}`);
+        async function loadStudent() {
+            try {
+                const response = await fetch(API_URL);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const students = await response.json();
+                renderStudent(students);
+            } catch (error) {
+                console.error("데이터 로드 실패:", error);
             }
         }
+
+        function renderStudent(students) {
+            const list = document.getElementById("studentList");
+            list.replaceChildren();
+
+            students.forEach(student => {
+                const li = document.createElement("li");
+                li.textContent = `${student.name}(${student.age})`;
+                list.appendChild(li);
+            });
+        };
+
+        window.addEventListener("DOMContentLoaded", function () {
+            loadStudent();
+        });
     </script>
 </head>
+
 <body>
-    
+    <h1>학생 목록</h1>
+    <ul id="studentList"></ul>
 </body>
+
 </html>
