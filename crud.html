@@ -115,12 +115,12 @@
                     throw new Error(`HTTP ${response.status}`);
 
                 }
-                    await GETSongs();
-            } catch (error){
-                    console.error("수정 실패:", error);
+                await GETSongs();
+            } catch (error) {
+                console.error("수정 실패:", error);
             }
         }
-                
+
 
         async function addsong(songname, singername, kindof, when, who) {
             const newSong = {
@@ -139,7 +139,7 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP ${ response.status }`);
+                    throw new Error(`HTTP ${response.status}`);
                 }
 
                 await GETSongs();   // 저장 성공 후 최신 목록 다시 불러오기
@@ -176,6 +176,18 @@
                 bname.focus();
                 GETSongs();
 
+            });
+            const search = document.querySelector("#search");
+
+            search.addEventListener("input", function () {
+                const keyword = search.value.trim().toLowerCase();
+
+                const result = songs.filter(song =>
+                    song.songname.toLowerCase().includes(keyword) ||
+                    song.singername.toLowerCase().includes(keyword)
+                );
+
+                renderSong(result);
             });
 
         });
@@ -247,6 +259,7 @@
     <div class="container card shadow-sm border-0 mb-4" style="max-width: 800;">
         <div class="card-body p-4">
             <h2>매입한 음반 목록</h2>
+            <input type="text" id="search" class="form-control mb-3" placeholder="곡명 또는 가수로 검색">
             <ul id="cblist"></ul>
         </div>
     </div>
